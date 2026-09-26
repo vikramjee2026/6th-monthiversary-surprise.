@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 6th Monthiversary! ❤️</title>
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fbe4e8 0%, #f7cad0 50%, #f4acb7 100%);
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      user-select: none;
+      padding: 15px;
+    }
+
+    /* Floating Hearts Background */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 20px;
+      color: rgba(230, 57, 70, 0.6);
+      animation: floatUp 7s infinite ease-in;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-110vh) scale(1.3) rotate(25deg); opacity: 0; }
+    }
+
+    /* Card Container */
+    .card-container {
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 25px 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      text-align: center;
+    }
+
+    h1 {
+      color: #b7094c;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #6c757d;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    /* Cake Display Container */
+    .cake-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 0 auto 20px auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    .cake-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    #img-cut {
+      opacity: 0;
+    }
+
+    /* Candles overlay on top of cake image */
+    .candles-container {
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      z-index: 5;
+      transition: opacity 0.5s ease;
+    }
+
+    .candle {
+      position: relative;
+      width: 8px;
+      height: 35px;
+      background: repeating-linear-gradient(45deg, #ffb703, #ffb703 6px, #ffffff 6px, #ffffff 12px);
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .flame {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 18px;
+      background: radial-gradient(circle, #ffea00 20%, #ff6d00 80%);
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 12px #ffb703, 0 0 20px #ff6d00;
+      animation: flicker 0.5s infinite alternate ease-in-out;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .flame.off {
+      opacity: 0;
+      transform: translateX(-50%) scale(0);
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); }
+      100% { transform: translateX(-50%) scale(1.15) rotate(2deg); }
+    }
+
+    /* Animated Knife Element */
+    .knife {
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      font-size: 3.5rem;
+      transform: rotate(-45deg);
+      opacity: 0;
+      transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+      pointer-events: none;
+      z-index: 8;
+    }
+
+    .knife.cutting {
+      opacity: 1;
+      top: 40%;
+      right: 35%;
+      transform: rotate(20deg) scale(1.2);
+    }
+
+    /* Cut Slice Line Effect */
+    .cut-effect {
+      position: absolute;
+      top: 25%;
+      left: 55%;
+      width: 4px;
+      height: 0;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+      z-index: 6;
+      transition: height 0.5s ease;
+      transform: rotate(15deg);
+    }
+
+    /* Button */
+    .btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #d81159, #8f2d56);
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(216, 17, 89, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Message Modal Card */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+      z-index: 100;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: white;
+      padding: 32px 24px;
+      border-radius: 24px;
+      max-width: 380px;
+      width: 88%;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      transform: translateY(30px);
+      transition: transform 0.5s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-card h2 {
+      color: #b7094c;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    .modal-card p {
+      color: #495057;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div id="hearts-bg"></div>
+
+  <div class="card-container">
+    <h1>Happy 6th Monthiversary! ❤️</h1>
+    <div class="subtitle" id="status-text">Blow out the 6 candles for our 6 months! 🕯️</div>
+
+    <div class="cake-wrapper" onclick="handleCakeClick()">
+      <!-- Whole Cake Image -->
+      <img src="cake-whole.jpg" id="img-whole" class="cake-img" alt="Whole Cake">
+      <!-- Cut Cake Image -->
+      <img src="cake-cut.jpg" id="img-cut" class="cake-img" alt="Cut Cake">
+
+      <!-- 6 Candles positioned over top cream puffs -->
+      <div class="candles-container" id="candles-group">
+        <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
+        <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
+        <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
+        <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
+        <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
+        <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
+      </div>
+
+      <div class="cut-effect" id="cut-line"></div>
+      <div class="knife" id="knife">🔪</div>
+    </div>
+
+    <button class="btn" id="action-btn" onclick="handleButtonClick()">Blow All Candles 🕯️</button>
+  </div>
+
+  <!-- Love Letter Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-card">
+      <h2>Happy 6 Months, My Love! 💕</h2>
+      <p>Six amazing months filled with laughter, love, and sweet moments together. Thank you for making every day special! Here's to forever! 🥂✨</p>
+      <button class="btn" onclick="closeModal()">Cut Again 🎂</button>
+    </div>
+  </div>
+
+  <script>
+    // Create floating hearts
+    const heartsBg = document.getElementById('hearts-bg');
+    for (let i = 0; i < 18; i++) {
+      let heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      heart.style.fontSize = (16 + Math.random() * 18) + 'px';
+      heartsBg.appendChild(heart);
+    }
+
+    // Interactive Logic
+    let step = 0; // 0 = Blow candles, 1 = Ready to cut, 2 = Cutting done
+    const statusText = document.getElementById('status-text');
+    const actionBtn = document.getElementById('action-btn');
+    const imgWhole = document.getElementById('img-whole');
+    const imgCut = document.getElementById('img-cut');
+    const knife = document.getElementById('knife');
+    const cutLine = document.getElementById('cut-line');
+    const candlesGroup = document.getElementById('candles-group');
+
+    function extinguish(e, candleEl) {
+      e.stopPropagation();
+      const flame = candleEl.querySelector('.flame');
+      if (flame) flame.classList.add('off');
+      checkFlames();
+    }
+
+    function checkFlames() {
+      const activeFlames = document.querySelectorAll('.flame:not(.off)');
+      if (activeFlames.length === 0 && step === 0) {
+        step = 1;
+        statusText.innerText = "Yay! Now tap 'Cut the Cake'! 🔪";
+        actionBtn.innerText = "Cut the Cake 🔪";
+      }
+    }
+
+    function handleButtonClick() {
+      if (step === 0) {
+        document.querySelectorAll('.flame').forEach(f => f.classList.add('off'));
+        checkFlames();
+      } else if (step === 1) {
+        sliceCake();
+      }
+    }
+
+    function handleCakeClick() {
+      if (step === 0) {
+        document.querySelectorAll('.flame').forEach(f => f.classList.add('off'));
+        checkFlames();
+      } else if (step === 1) {
+        sliceCake();
+      }
+    }
+
+    function sliceCake() {
+      if (step !== 1) return;
+      step = 2;
+      actionBtn.disabled = true;
+      statusText.innerText = "Cutting the cake... ✨";
+
+      // 1. Animate knife slice
+      knife.classList.add('cutting');
+      
+      setTimeout(() => {
+        cutLine.style.height = "50%";
+      }, 300);
+
+      // 2. Hide candles & reveal cut cake slice
+      setTimeout(() => {
+        candlesGroup.style.opacity = '0';
+        imgCut.style.opacity = '1';
+        imgWhole.style.opacity = '0';
+      }, 700);
+
+      // 3. Fire Confetti Burst
+      setTimeout(() => {
+        confetti({
+          particleCount: 140,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
+      }, 1000);
+
+      // 4. Show Celebration Modal Card
+      setTimeout(() => {
+        document.getElementById('modal').classList.add('active');
+      }, 1800);
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      // Reset Experience
+      step = 0;
+      document.querySelectorAll('.flame').forEach(f => f.classList.remove('off'));
+      candlesGroup.style.opacity = '1';
+      imgCut.style.opacity = '0';
+      imgWhole.style.opacity = '1';
+      knife.classList.remove('cutting');
+      cutLine.style.height = '0';
+      actionBtn.disabled = false;
+      actionBtn.innerText = "Blow All Candles 🕯️";
+      statusText.innerText = "Blow out the 6 candles for our 6 months! 🕯️";
+    }
+  </script>
+</body>
+</html>
