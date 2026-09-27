@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy 6th Monthiversary! ❤️</title>
+  <!-- Romantic Handwritten Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
   <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
@@ -26,7 +28,7 @@
       padding: 15px;
     }
 
-    /* Floating Hearts Background */
+    /* Floating Background Hearts */
     .heart {
       position: absolute;
       bottom: -50px;
@@ -41,7 +43,7 @@
       100% { transform: translateY(-110vh) scale(1.3) rotate(25deg); opacity: 0; }
     }
 
-    /* Card Container */
+    /* Main Container */
     .card-container {
       z-index: 10;
       display: flex;
@@ -49,7 +51,7 @@
       align-items: center;
       width: 100%;
       max-width: 480px;
-      background: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.55);
       backdrop-filter: blur(12px);
       border-radius: 28px;
       padding: 25px 20px;
@@ -67,7 +69,7 @@
 
     .subtitle {
       color: #6c757d;
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin-bottom: 20px;
       font-weight: 500;
       transition: all 0.3s ease;
@@ -99,26 +101,36 @@
       opacity: 0;
     }
 
-    /* Candles overlay on top of cake image */
+    /* Overlay Container for Candles */
     .candles-container {
       position: absolute;
-      top: 18%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 16px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 5;
       transition: opacity 0.5s ease;
+      pointer-events: none;
     }
 
     .candle {
-      position: relative;
+      position: absolute;
       width: 8px;
-      height: 35px;
-      background: repeating-linear-gradient(45deg, #ffb703, #ffb703 6px, #ffffff 6px, #ffffff 12px);
+      height: 32px;
+      background: repeating-linear-gradient(45deg, #ffb703, #ffb703 5px, #ffffff 5px, #ffffff 10px);
       border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      pointer-events: auto;
+      cursor: pointer;
     }
+
+    /* 3D Arc Placement over Cream Swirls */
+    .candle:nth-child(1) { top: 27%; left: 29%; }
+    .candle:nth-child(2) { top: 23%; left: 37%; }
+    .candle:nth-child(3) { top: 20%; left: 45%; }
+    .candle:nth-child(4) { top: 20%; left: 53%; }
+    .candle:nth-child(5) { top: 23%; left: 61%; }
+    .candle:nth-child(6) { top: 27%; left: 69%; }
 
     .flame {
       position: absolute;
@@ -164,7 +176,6 @@
       transform: rotate(20deg) scale(1.2);
     }
 
-    /* Cut Slice Line Effect */
     .cut-effect {
       position: absolute;
       top: 25%;
@@ -178,7 +189,7 @@
       transform: rotate(15deg);
     }
 
-    /* Button */
+    /* Main Action Button */
     .btn {
       padding: 14px 28px;
       border: none;
@@ -196,12 +207,39 @@
       transform: scale(0.96);
     }
 
-    /* Message Modal Card */
+    /* Mailbox Pop-up Trigger */
+    .mailbox-trigger {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite alternate ease-in-out;
+    }
+
+    .mailbox-icon {
+      font-size: 3.8rem;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+    }
+
+    .mailbox-text {
+      color: #b7094c;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 6px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+
+    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -209,6 +247,7 @@
       pointer-events: none;
       transition: opacity 0.6s ease;
       z-index: 100;
+      padding: 10px;
     }
 
     .modal-overlay.active {
@@ -216,33 +255,67 @@
       pointer-events: auto;
     }
 
-    .modal-card {
-      background: white;
-      padding: 32px 24px;
-      border-radius: 24px;
-      max-width: 380px;
-      width: 88%;
+    /* Large & Dynamic Letter Paper Styling */
+    .letter-paper {
+      background: url('letter-bg.jpg') no-repeat center center;
+      background-size: 100% 100%;
+      width: min(92vw, 550px);         
+      height: min(90vh, 900px);        
+      aspect-ratio: 9 / 15;            
+      border-radius: 20px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      padding: 14% 11% 8% 11%;         
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
       text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-      transform: translateY(30px);
+      transform: translateY(30px) scale(0.95);
       transition: transform 0.5s ease;
+      position: relative;
     }
 
-    .modal-overlay.active .modal-card {
-      transform: translateY(0);
+    .modal-overlay.active .letter-paper {
+      transform: translateY(0) scale(1);
     }
 
-    .modal-card h2 {
-      color: #b7094c;
-      font-size: 1.6rem;
-      margin-bottom: 12px;
+    /* Larger Scalable Calligraphy Text */
+    .letter-text {
+      font-family: 'Dancing Script', cursive, serif;
+      color: #2b1704;
+      font-size: clamp(1.2rem, 3.2vw, 1.55rem); /* Increased font size */
+      line-height: 1.42;
+      font-weight: 700;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+      width: 100%;
     }
 
-    .modal-card p {
-      color: #495057;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin-bottom: 22px;
+    .letter-p {
+      margin-bottom: 10px;
+    }
+
+    .letter-title {
+      font-size: clamp(1.35rem, 3.8vw, 1.8rem); /* Increased title size */
+      color: #800f2f;
+      margin-bottom: 14px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(0,0,0,0.1);
+      font-size: 1.1rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #2b1704;
+      font-weight: bold;
+      z-index: 10;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     }
   </style>
 </head>
@@ -261,7 +334,7 @@
       <!-- Cut Cake Image -->
       <img src="cake-cut.jpg" id="img-cut" class="cake-img" alt="Cut Cake">
 
-      <!-- 6 Candles positioned over top cream puffs -->
+      <!-- 6 Candles positioned in a natural arc -->
       <div class="candles-container" id="candles-group">
         <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
         <div class="candle" onclick="extinguish(event, this)"><div class="flame"></div></div>
@@ -275,20 +348,32 @@
       <div class="knife" id="knife">🔪</div>
     </div>
 
+    <!-- Action Button -->
     <button class="btn" id="action-btn" onclick="handleButtonClick()">Blow All Candles 🕯️</button>
+
+    <!-- Animated Mailbox Trigger -->
+    <div class="mailbox-trigger" id="mailbox-box" onclick="openLetter()">
+      <div class="mailbox-icon">📫 💌</div>
+      <div class="mailbox-text">Tap to open your love letter! ✨</div>
+    </div>
   </div>
 
-  <!-- Love Letter Modal -->
+  <!-- Vintage Love Letter Modal -->
   <div class="modal-overlay" id="modal">
-    <div class="modal-card">
-      <h2>Happy 6 Months, My Love! 💕</h2>
-      <p>Six amazing months filled with laughter, love, and sweet moments together. Thank you for making every day special! Here's to forever! 🥂✨</p>
-      <button class="btn" onclick="closeModal()">Cut Again 🎂</button>
+    <div class="letter-paper">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <div class="letter-text">
+        <p class="letter-p letter-title">Happy 6 monthiversary wiffyyyy 🥰💌🌷</p>
+        <p class="letter-p">Thank you soooooo muchhhh for standing with Me 🥰💌🌷</p>
+        <p class="letter-p">Thank you soooooo muchhhh for Giving me love and care 🎀</p>
+        <p class="letter-p">I hope God made this true as Early as possible, And we both can live the dream we saw together to living, having kid, and many more 🥰💌🌷🎀</p>
+        <p class="letter-p">I love you soooooo much wiffyyyy 🥰🎀🌷</p>
+      </div>
     </div>
   </div>
 
   <script>
-    // Create floating hearts
+    // Generate floating background hearts
     const heartsBg = document.getElementById('hearts-bg');
     for (let i = 0; i < 18; i++) {
       let heart = document.createElement('div');
@@ -301,7 +386,7 @@
     }
 
     // Interactive Logic
-    let step = 0; // 0 = Blow candles, 1 = Ready to cut, 2 = Cutting done
+    let step = 0; // 0 = Blow candles, 1 = Ready to cut, 2 = Cut done
     const statusText = document.getElementById('status-text');
     const actionBtn = document.getElementById('action-btn');
     const imgWhole = document.getElementById('img-whole');
@@ -309,6 +394,7 @@
     const knife = document.getElementById('knife');
     const cutLine = document.getElementById('cut-line');
     const candlesGroup = document.getElementById('candles-group');
+    const mailboxBox = document.getElementById('mailbox-box');
 
     function extinguish(e, candleEl) {
       e.stopPropagation();
@@ -347,8 +433,8 @@
     function sliceCake() {
       if (step !== 1) return;
       step = 2;
-      actionBtn.disabled = true;
-      statusText.innerText = "Cutting the cake... ✨";
+      actionBtn.style.display = 'none';
+      statusText.innerText = "Cutting our 6th Monthiversary Cake... ✨";
 
       // 1. Animate knife slice
       knife.classList.add('cutting');
@@ -367,31 +453,25 @@
       // 3. Fire Confetti Burst
       setTimeout(() => {
         confetti({
-          particleCount: 140,
-          spread: 90,
+          particleCount: 150,
+          spread: 100,
           origin: { y: 0.6 }
         });
       }, 1000);
 
-      // 4. Show Celebration Modal Card
+      // 4. Reveal Mailbox Prompt
       setTimeout(() => {
-        document.getElementById('modal').classList.add('active');
-      }, 1800);
+        statusText.innerText = "You've got a love letter! 💌";
+        mailboxBox.style.display = 'flex';
+      }, 1600);
+    }
+
+    function openLetter() {
+      document.getElementById('modal').classList.add('active');
     }
 
     function closeModal() {
       document.getElementById('modal').classList.remove('active');
-      // Reset Experience
-      step = 0;
-      document.querySelectorAll('.flame').forEach(f => f.classList.remove('off'));
-      candlesGroup.style.opacity = '1';
-      imgCut.style.opacity = '0';
-      imgWhole.style.opacity = '1';
-      knife.classList.remove('cutting');
-      cutLine.style.height = '0';
-      actionBtn.disabled = false;
-      actionBtn.innerText = "Blow All Candles 🕯️";
-      statusText.innerText = "Blow out the 6 candles for our 6 months! 🕯️";
     }
   </script>
 </body>
